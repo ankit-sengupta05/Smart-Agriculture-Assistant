@@ -15,7 +15,7 @@
 - repo: local
   hooks:
     - id: mask-env
-      name: Mask secrets in .env
+      name: Mask secrets in .env and other files
       entry: python scripts/mask_keys.py
       language: system
       types: [text]
