@@ -6,12 +6,12 @@ SECRET_PATTERNS = [
     r'(_KEY|_SECRET|_TOKEN|API_KEY|PASSWORD)=[^\s]+',
 ]
 
-# Scan all files recursively
+# Scan all files recursively in the repo
 for file_path in Path('.').rglob('*'):
     if file_path.is_file():
         try:
             content = file_path.read_text(errors='ignore')
-        except (UnicodeDecodeError, OSError):
+        except Exception:
             continue
         original = content
         for pattern in SECRET_PATTERNS:
