@@ -7,7 +7,7 @@ SECRET_PATTERNS = [
     r'(_KEY|_SECRET|_TOKEN|API_KEY|PASSWORD)=[^\s]+',
 ]
 
-# Scan all files recursively for .env, .py, or .txt
+# Scan all files recursively for .env, .py, .txt
 for file_path in Path('.').rglob('*'):
     if file_path.is_file() and file_path.suffix in ['.env', '.py', '.txt']:
         content = file_path.read_text()

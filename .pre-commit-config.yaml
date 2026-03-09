@@ -23,7 +23,7 @@
 
     - id: check-requirements
       name: Check requirements file syntax
-      entry: bash scripts/check_requirements.sh
+      entry: python scripts/check_requirements.py
       language: system
       types: [file]
       files: ^requirements\.txt$
