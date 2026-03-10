@@ -6,12 +6,48 @@ __pycache__/
 .env/
 venv/
 env/
+*.egg-info/
+dist/
+build/
 
-# Node
+# Node / JS / TS
 node_modules/
+dist/
+.next/
+.nuxt/
+*.tsbuildinfo
 
-# IDE/editor
+# Java / Kotlin
+*.class
+*.jar
+*.war
+target/
+.gradle/
+
+# C / C++
+*.o
+*.out
+*.a
+*.so
+*.exe
+
+# Go
+vendor/
+
+# Rust
+target/
+
+# Ruby
+.bundle/
+vendor/bundle/
+
+# Dart / Flutter
+.dart_tool/
+.flutter-plugins
+
+# IDE
 .vscode/
+.idea/
 *.swp
 .DS_Store
 
@@ -19,4 +55,15 @@ node_modules/
 *.log
 
 # Secrets
+.env
+.env.local
+.env.production
+.env.development
+.env.staging
+google-services.json
+GoogleService-Info.plist
 *.secret
+*.pem
+*.key
+*.p12
+*.keystore
