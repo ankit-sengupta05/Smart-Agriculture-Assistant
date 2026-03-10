@@ -39,7 +39,8 @@ jobs:
           pip install pre-commit flake8
 
       - name: Install Node tools
-        run: npm install -g @babel/parser
+        run: |
+          npm install --save-dev @babel/parser @babel/core
 
       - name: Run all pre-commit hooks
         run: pre-commit run --all-files

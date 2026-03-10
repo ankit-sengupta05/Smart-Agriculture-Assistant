@@ -1,16 +1,133 @@
-# React + Vite
+# 🌾 PlantGuard — Smart Agriculture Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Structure
 
-Currently, two official plugins are available:
+```
+PlantGuard/
+│
+├── backend/
+│   ├── __init__.py                  ← required (marks as Python package)
+│   ├── app.py                       ← Flask REST API entry point
+│   ├── agri.db                      ← SQLite DB (auto-created on first run)
+│   │
+│   ├── ml_pipeline/
+│   │   ├── __init__.py              ← required
+│   │   └── yield_predictor.py       ← TensorFlow + Pandas ML pipeline
+│   │
+│   └── vision/
+│       ├── __init__.py              ← required
+│       └── disease_detector.py      ← OpenCV disease detection
+│
+├── frontend/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── src/
+│       ├── main.jsx
+│       └── App.jsx                  ← React dashboard
+│
+├── requirements.txt
+└── README.md
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Backend (Flask API)
 
-## Expanding the ESLint configuration
+```powershell
+# 1. Create and activate virtual environment
+python -m venv venv
+venv\Scripts\activate
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 2. Install dependencies
+pip install flask flask-cors numpy pandas opencv-python scikit-learn
+
+# 3. Run the API  (from inside the backend/ folder)
+cd backend
+python app.py
+```
+
+You should see:
+```
+🌾 PlantGuard — Smart Agriculture API
+──────────────────────────────────────
+  Database initialised at ...agri.db
+  Demo data seeded (4 users, 4 listings)
+  Server starting on http://localhost:5000
+  Demo login  →  ramesh_farmer / demo123  (farmer)
+              →  sarah_buyer   / demo123  (buyer)
+──────────────────────────────────────
+```
+
+---
+
+### Frontend (React + Vite)
+
+Open a **second terminal**:
+
+```powershell
+cd frontend
+npm install
+npm run dev
+# → http://localhost:5173
+```
+
+---
+
+## API Usage
+
+### Login
+```powershell
+curl -X POST http://localhost:5000/api/auth/login `
+  -H "Content-Type: application/json" `
+  -d '{"username":"ramesh_farmer","password":"demo123"}'
+```
+
+### Get listings
+```powershell
+curl http://localhost:5000/api/listings
+curl "http://localhost:5000/api/listings?crop_type=rice"
+curl "http://localhost:5000/api/listings?search=wheat"
+```
+
+### Predict yield  (replace TOKEN with value from login)
+```powershell
+curl -X POST http://localhost:5000/api/predict/yield `
+  -H "Content-Type: application/json" `
+  -H "Authorization: Bearer TOKEN" `
+  -d '{
+    "crop_type":"wheat",
+    "area_hectares":10,
+    "planting_date":"2025-01-01",
+    "soil_type":"loam",
+    "irrigation_type":"drip",
+    "rainfall_mm":550,
+    "temperature_avg":22,
+    "temperature_min":14,
+    "temperature_max":32,
+    "humidity_percent":65,
+    "solar_radiation":18,
+    "fertilizer_kg_per_ha":120,
+    "pesticide_applications":2
+  }'
+```
+
+### Scan disease image
+```powershell
+curl -X POST http://localhost:5000/api/scan/disease `
+  -H "Authorization: Bearer TOKEN" `
+  -F "image=@path\to\crop_photo.jpg"
+```
+
+---
+
+## Demo Accounts
+
+| Username       | Password  | Role   |
+|----------------|-----------|--------|
+| ramesh_farmer  | demo123   | farmer |
+| sarah_buyer    | demo123   | buyer  |
+| carlos_grower  | demo123   | farmer |
+| amina_trade    | demo123   | buyer  |

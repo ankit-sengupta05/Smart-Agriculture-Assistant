@@ -9,6 +9,13 @@ env/
 *.egg-info/
 dist/
 build/
+backend\vision\__pycache__
+backend\ml_pipeline\__pycache__
+backend\__pycache__
+
+frontend\node_modules
+backend\__pycache__
+node_modules
 
 # Node / JS / TS
 node_modules/
@@ -23,6 +30,7 @@ dist/
 *.war
 target/
 .gradle/
+build/
 
 # C / C++
 *.o
@@ -44,8 +52,9 @@ vendor/bundle/
 # Dart / Flutter
 .dart_tool/
 .flutter-plugins
+build/
 
-# IDE
+# IDE/editor
 .vscode/
 .idea/
 *.swp
@@ -54,7 +63,7 @@ vendor/bundle/
 # Logs
 *.log
 
-# Secrets
+# Secrets -- NEVER commit these
 .env
 .env.local
 .env.production
