@@ -1,9 +1,10 @@
 ﻿flask>=3.0.0
 flask-cors>=4.0.0
+gunicorn>=21.2.0
 numpy>=1.26.0
 pandas>=2.1.0
-opencv-python>=4.8.0
+opencv-python-headless>=4.8.0
 scikit-learn>=1.3.0
 
-# Uncomment when you want to train/load TF models
+# Uncomment to enable TensorFlow model training/loading
 # tensorflow>=2.15.0

@@ -1,0 +1,26 @@
+services:
+  # ── Flask Backend API ──────────────────────────────────────────────────────
+  - type: web
+    name: plantguard-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r ../requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: FLASK_ENV
+        value: production
+
+  # ── React Frontend ─────────────────────────────────────────────────────────
+  - type: web
+    name: plantguard-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://plantguard-api.onrender.com

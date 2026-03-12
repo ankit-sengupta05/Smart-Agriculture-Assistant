@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // ── Real API Layer ────────────────────────────────────────────────────────────
-const API_BASE = "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 async function apiCall(path, options = {}) {
   const token = localStorage.getItem("pg_token");
